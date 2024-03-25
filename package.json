@@ -1,0 +1,19 @@
+{
+  "name": "chub-extensions-ts",
+  "version": "0.0.1",
+  "description": "Public types for React-based Extensions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^18.2.70",
+    "csstype": "^3.1.3"
+  }
+}
