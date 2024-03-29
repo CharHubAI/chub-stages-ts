@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 
-import {Extension} from "../../dist";
 import {InitialData} from "../types/initial";
-import {ExtensionResponse} from "../types/extension";
+import {Extension, ExtensionResponse} from "../types/extension";
 
-interface ExtensionRunnerProps<ExtensionType extends Extension<StateType, ConfigType>, StateType, ConfigType> {
+export interface ExtensionRunnerProps<ExtensionType extends Extension<StateType, ConfigType>, StateType, ConfigType> {
     factory: (data: InitialData<StateType, ConfigType>) => ExtensionType;
 }
 
