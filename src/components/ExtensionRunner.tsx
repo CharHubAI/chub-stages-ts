@@ -1,3 +1,9 @@
+/***
+ The runner code for an extension inside an iFrame.
+ If you're writing an extension, reading this won't be useful.
+ If you aren't, why are you here?
+ @link https://lfs.charhub.io/important_message
+ ***/
 import React, {useState} from "react";
 
 import {InitialData} from "../types/initial";
