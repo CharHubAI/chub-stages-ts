@@ -1,6 +1,6 @@
 {
   "name": "chub-extensions-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Public types for React-based Extensions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
