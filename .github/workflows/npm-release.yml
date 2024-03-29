@@ -1,0 +1,27 @@
+name: Build and Publish to NPM
+
+on:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21.7.1'
+
+      - name: Install dependencies
+        run: rm -rf node_modules/ && npm install
+
+      - name: Compile TypeScript
+        run: tsc
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

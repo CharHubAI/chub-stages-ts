@@ -4,7 +4,9 @@ import {Message} from "./message";
 
 export interface ExtensionResponse<StateType> {
     state: StateType | null,
-    modifiedMessage: string | null
+    modifiedMessage: string | null,
+    extensionMessage: string | null,
+    error: string | null
 }
 
 export abstract class Extension<StateType, ConfigType> {
@@ -15,9 +17,9 @@ export abstract class Extension<StateType, ConfigType> {
 
     abstract setState(state: StateType): Promise<void>;
 
-    abstract beforePrompt(inputMessage: Message): Promise<ExtensionResponse<StateType>>;
+    abstract beforePrompt(inputMessage: Message): Promise<Partial<ExtensionResponse<StateType>>>;
 
-    abstract afterResponse(botMessage: Message): Promise<ExtensionResponse<StateType>>;
+    abstract afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<StateType>>>;
 
     abstract render(): ReactElement;
 

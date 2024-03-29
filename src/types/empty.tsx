@@ -14,13 +14,14 @@ export class ChubExtension implements Extension<any, any> {
 
     async setState(state: any): Promise<void> { }
 
-    async beforePrompt(userMessage: Message): Promise<ExtensionResponse<any>> {
-        return {state: null, modifiedMessage: null};
+    async beforePrompt(userMessage: Message): Promise<Partial<ExtensionResponse<any>>> {
+        return {extensionMessage: null, state: null, modifiedMessage: null, error: null};
     }
 
-    async afterResponse(botMessage: Message): Promise<ExtensionResponse<any>> {
-        return {state: null, modifiedMessage: null};
+    async afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<any>>> {
+        return {extensionMessage: null, state: null, modifiedMessage: null, error: null};
     }
+
     render(): ReactElement {
         return <div>Hello World! I'm an empty extension!</div>;
     }
