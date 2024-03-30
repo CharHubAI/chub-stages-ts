@@ -1,0 +1,39 @@
+name: Publish to npm on tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21.7.1'
+
+      - name: Install Dependencies
+        run: rm -rf node_modules/ && npm install
+
+      - name: Setup .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/v}"
+        # Assumes tag is of form v1.0.0, strips the 'v'
+
+      - name: Update package.json version
+        run: npm version ${{ steps.get_version.outputs.VERSION }} --no-git-tag-version
+        # Updates package.json version without creating a git tag
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

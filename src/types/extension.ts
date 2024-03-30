@@ -1,6 +1,7 @@
 import {ReactElement} from "react";
 import {InitialData} from "./initial";
 import {Message} from "./message";
+import {LoadResponse} from "./load";
 
 /***
  The type returned from beforePrompt and afterResponse.
@@ -65,12 +66,12 @@ export abstract class Extension<StateType, ConfigType> {
     /***
      This is called immediately after the constructor, in case there is some asynchronous code you need to
      run on instantiation.
-     The boolean returned should be false IFF (if and only if), some condition is met that means
+     The 'success' boolean returned should be false IFF (if and only if), some condition is met that means
      the extension shouldn't be run at all and the iFrame can be closed/removed.
      For example, if an extension displays expressions and no characters have an expression pack,
      there is no reason to run the extension, so it would return false here.
      ***/
-    abstract load(): Promise<boolean>;
+    abstract load(): Promise<Partial<LoadResponse>>;
 
     /***
      This can be called at any time, typically after a jump to a different place in the chat tree

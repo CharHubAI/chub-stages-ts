@@ -3,6 +3,7 @@ import {InitialData} from "./initial";
 import {Message} from "./message";
 import React from "react";
 import {ReactElement} from "react";
+import {LoadResponse} from "./load";
 
 /***
  The type that this extension persists message-level state in.
@@ -56,16 +57,22 @@ export class ChubExtension implements Extension<StateType, ConfigType> {
         this.myInternalState['numChars'] = Object.keys(characters).length;
     }
 
-    async load(): Promise<boolean> {
+    async load(): Promise<Partial<LoadResponse>> {
         /***
          This is called immediately after the constructor, in case there is some asynchronous code you need to
             run on instantiation.
-         The boolean returned should be false IFF (if and only if), some condition is met that means
-            the extension shouldn't be run at all and the iFrame can be closed/removed.
-         For example, if an extension displays expressions and no characters have an expression pack,
-            there is no reason to run the extension, so it would return false here.
          ***/
-        return true;
+        return {
+            /*** @type boolean @default null
+                @description The 'success' boolean returned should be false IFF (if and only if), some condition is met that means
+                 the extension shouldn't be run at all and the iFrame can be closed/removed.
+                 For example, if an extension displays expressions and no characters have an expression pack,
+                 there is no reason to run the extension, so it would return false here. ***/
+            success: true,
+            /*** @type string | null @description an error message to show
+             briefly at the top of the screen, if any. ***/
+            error: null
+        };
     }
 
     async setState(state: StateType): Promise<void> {
@@ -144,7 +151,7 @@ export class ChubExtension implements Extension<StateType, ConfigType> {
          ***/
         return <>
             <div>Hello World! I'm an empty extension! With {this.myInternalState['someKey']}!</div>
-            <div>There are {this.myInternalState['numChars']} characters and {this.myInternalState['numUsers']} here.</div>
+            <div>There is/are/were {this.myInternalState['numChars']} character(s) and {this.myInternalState['numUsers']} human(s) here.</div>
         </>;
     }
 
