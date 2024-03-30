@@ -19,6 +19,9 @@ jobs:
       - name: Install Dependencies
         run: rm -rf node_modules/ && npm install
 
+      - name: Compile TypeScript
+        run: tsc
+
       - name: Setup .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
