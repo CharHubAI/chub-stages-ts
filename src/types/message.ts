@@ -20,5 +20,13 @@ export interface Message {
      @type: boolean
      @description Whether this is itself from another bot, ex. in a group chat.
      ***/
-    isBot: boolean
+    isBot: boolean,
+
+    /***
+     @type string
+     @default "0"
+     @description The anonymized ID of the bot or human being prompted, if any.
+       Essentially only relevant to beforePrompt currently.
+     ***/
+    promptForId: string | null
 }
