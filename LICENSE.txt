@@ -2,4 +2,4 @@ This software is not open source.
 
 It is source available.
 
-You may not use it for anything.
+Any use outside of the context of Chub AI Extensions is not permitted.
