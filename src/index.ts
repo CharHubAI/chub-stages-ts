@@ -12,4 +12,9 @@ export {Speaker} from './types/speaker';
 export {
  User
 } from './types/user';
-export {ExtensionRunnerProps, ExtensionRunner} from "./components/ExtensionRunner";
+export {ExtensionRunnerProps,
+ ExtensionRunner} from "./components/ExtensionRunner";
+export {DEFAULT_INITIAL, DEFAULT_CHARACTER,
+DEFAULT_USER, DEFAULT_MESSAGE, DEFAULT_RESPONSE,
+ DEFAULT_LOAD_RESPONSE
+} from "./types/defaults";

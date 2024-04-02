@@ -7,23 +7,11 @@
 import React, {useState} from "react";
 
 import {InitialData} from "../types/initial";
-import {Extension, ExtensionResponse} from "../types/extension";
-import {LoadResponse} from "../types/load";
+import {Extension} from "../types/extension";
+import {DEFAULT_INITIAL, DEFAULT_LOAD_RESPONSE, DEFAULT_RESPONSE} from "../types/defaults";
 
 export interface ExtensionRunnerProps<ExtensionType extends Extension<StateType, ConfigType>, StateType, ConfigType> {
     factory: (data: InitialData<StateType, ConfigType>) => ExtensionType;
-}
-
-const DEFAULT_RESPONSE: ExtensionResponse<any> = {
-    error: null, extensionMessage: null, modifiedMessage: null, state: null
-}
-
-const DEFAULT_INITIAL_RESPONSE: LoadResponse = {
-    error: "", success: true
-}
-
-const DEFAULT_INITIAL: InitialData<any, any> = {
-    characters: {}, config: null, lastState: null, users: {}
 }
 
 const INIT = 'INIT';
@@ -54,7 +42,7 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                 let newExtension = factory({...DEFAULT_INITIAL, ...data});
                 const canContinue = await newExtension.load();
                 sendMessage( 'INIT',  {
-                    ...DEFAULT_INITIAL_RESPONSE, ...canContinue
+                    ...DEFAULT_LOAD_RESPONSE, ...canContinue
                 });
                 setExtension(newExtension);
                 setNode(new Date());
