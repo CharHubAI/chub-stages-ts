@@ -1,0 +1,39 @@
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.spinner {
+  padding: 0;
+  margin: auto;
+  background-color: rgb(0, 0, 0, 0.1);
+  border: 10px solid rgb(0, 0, 0, 0.01);
+  width: 20vw;
+  height: 20vw;
+  border-radius: 50%;
+  animation: spin 1.25s linear infinite;
+}
+
+.spinner img {
+  width: 20vw;
+  height: 20vw;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

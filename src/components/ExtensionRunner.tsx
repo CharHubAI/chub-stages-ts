@@ -9,6 +9,7 @@ import React, {useState} from "react";
 import {InitialData} from "../types/initial";
 import {Extension} from "../types/extension";
 import {DEFAULT_INITIAL, DEFAULT_LOAD_RESPONSE, DEFAULT_RESPONSE} from "../types/defaults";
+import {Loading} from "./Loading";
 
 export interface ExtensionRunnerProps<ExtensionType extends Extension<StateType, ConfigType>, StateType, ConfigType> {
     factory: (data: InitialData<StateType, ConfigType>) => ExtensionType;
@@ -73,7 +74,7 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
     });
     return <>
             <div style={{display: 'none'}}>{String(node)}{window.location.href}</div>
-            {extension == null ? <div>Extension loading...</div> : extension.render()}
+            {extension == null ? <Loading /> : extension.render()}
     </>;
 }
 
