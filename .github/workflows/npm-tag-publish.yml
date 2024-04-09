@@ -20,7 +20,7 @@ jobs:
         run: rm -rf node_modules/ && npm install
 
       - name: Compile TypeScript
-        run: tsc
+        run: tsc && cp src/index.scss dist/index.scss
 
       - name: Setup .npmrc
         env:
