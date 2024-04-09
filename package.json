@@ -1,6 +1,6 @@
 {
   "name": "chub-extensions-ts",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "description": "Public types for React-based Extensions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,10 +16,11 @@
     "node": "21.7.1"
   },
   "dependencies": {
-    "@types/react": "^18.2.73",
+    "@types/node": "20.10.0",
+    "@types/react": "^18.2.75",
     "csstype": "^3.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1"
+    "typescript": "^5.4.4"
   }
 }

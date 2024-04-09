@@ -45,17 +45,19 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                     ...DEFAULT_LOAD_RESPONSE, ...canContinue
                 });
                 setExtension(newExtension);
-                setNode(new Date());
+            } else if(extension == null) {
+                console.warn('Null extension instance for non-INIT message.');
             } else if (messageType == 'BEFORE') {
+                const beforeResponse = await extension?.beforePrompt({...data})
                 sendMessage('BEFORE', {...DEFAULT_RESPONSE,
-                    ...await extension?.beforePrompt({...data})});
-                setNode(new Date());
+                    ...beforeResponse});
             } else if (messageType == 'AFTER') {
+                const afterResponse = await extension?.afterResponse({...data});
                 sendMessage('AFTER', {...DEFAULT_RESPONSE,
-                    ...await extension?.afterResponse({...data})});
-                setNode(new Date());
+                    ...afterResponse});
             } else if (messageType == 'SET') {
                 await extension?.setState(data);
+                sendMessage('SET', {});
             }
         } catch (exception: any) {
             console.error('Extensions iFrame had an unexpected error: ', exception);
