@@ -1,3 +1,5 @@
+import React from "react";
+
 import '../index.scss';
 
 
@@ -9,7 +11,7 @@ export const Loading = () => {
                 <img
                     className="loading-spinner"
                     src="https://avatars.charhub.io/flower.png"
-                />
+                 alt={'Loading...'} />
             </div>
         </div>
     </div>
