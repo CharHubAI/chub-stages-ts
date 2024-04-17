@@ -40,12 +40,19 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                 console.debug('Extensions iFrame received data: ', event.data);
             }
             if(messageType == 'INIT') {
-                let newExtension = factory({...DEFAULT_INITIAL, ...data});
-                const canContinue = await newExtension.load();
-                sendMessage( 'INIT',  {
-                    ...DEFAULT_LOAD_RESPONSE, ...canContinue
-                });
-                setExtension(newExtension);
+                if (extension != null) {
+                    console.warn("INIT message for non-null extension.");
+                    sendMessage('INIT', {
+                        ...DEFAULT_LOAD_RESPONSE
+                    });
+                } else {
+                    let newExtension = factory({...DEFAULT_INITIAL, ...data});
+                    const canContinue = await newExtension.load();
+                    sendMessage( 'INIT',  {
+                        ...DEFAULT_LOAD_RESPONSE, ...canContinue
+                    });
+                    setExtension(newExtension);
+                }
             } else if(extension == null) {
                 console.warn('Null extension instance for non-INIT message.');
             } else if (messageType == 'BEFORE') {
