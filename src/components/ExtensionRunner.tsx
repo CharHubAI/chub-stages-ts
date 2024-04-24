@@ -28,6 +28,9 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
     const [extension, setExtension] = useState(null as null | Extension<any, any>);
     const [node, setNode] = useState(new Date());
 
+    const answers: {[key: string]: any} = {};
+    let last: string = '';
+
     function sendMessage(messageType: string, message: any) {
         window.parent.postMessage({"messageType": messageType, "data": message}, '*');
     }
@@ -39,32 +42,49 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                 console.debug('Extensions iFrame received event from origin: ', event.origin);
                 console.debug('Extensions iFrame received data: ', event.data);
             }
-            if(messageType == 'INIT') {
+            const answerKey = messageType + ': ' + JSON.stringify(data);
+            if((answers.hasOwnProperty(answerKey) && messageType == 'INIT') || last == answerKey) {
+                console.debug('Already seen, returning previous');
+                sendMessage(messageType, answers[answerKey]);
+                last = answerKey;
+            } else if(messageType == 'INIT') {
                 if (extension != null) {
                     console.warn("INIT message for non-null extension.");
                     sendMessage('INIT', {
                         ...DEFAULT_LOAD_RESPONSE
                     });
+                    last = answerKey;
                 } else {
                     let newExtension = factory({...DEFAULT_INITIAL, ...data});
                     const canContinue = await newExtension.load();
-                    sendMessage( 'INIT',  {
+                    const response = {
                         ...DEFAULT_LOAD_RESPONSE, ...canContinue
-                    });
+                    };
+                    answers[answerKey] = response;
+                    last = answerKey;
+                    sendMessage( 'INIT',  response);
                     setExtension(newExtension);
                 }
             } else if(extension == null) {
                 console.warn('Null extension instance for non-INIT message.');
             } else if (messageType == 'BEFORE') {
-                const beforeResponse = await extension?.beforePrompt({...data})
-                sendMessage('BEFORE', {...DEFAULT_RESPONSE,
-                    ...beforeResponse});
+                const beforeResponse = await extension?.beforePrompt({...data});
+                const response = {...DEFAULT_RESPONSE,
+                    ...beforeResponse};
+                answers[answerKey] = response;
+                last = answerKey;
+                sendMessage('BEFORE', response);
             } else if (messageType == 'AFTER') {
                 const afterResponse = await extension?.afterResponse({...data});
-                sendMessage('AFTER', {...DEFAULT_RESPONSE,
-                    ...afterResponse});
+                const response = {...DEFAULT_RESPONSE,
+                    ...afterResponse};
+                answers[answerKey] = response;
+                last = answerKey;
+                sendMessage('AFTER', response);
             } else if (messageType == 'SET') {
                 await extension?.setState(data);
+                answers[answerKey] = {};
+                last = answerKey;
                 sendMessage('SET', {});
             }
         } catch (exception: any) {
