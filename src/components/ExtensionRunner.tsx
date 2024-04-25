@@ -39,9 +39,7 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
             try {
                 if (!ALLOWED_ORIGINS.has(event.origin)) {
                     console.warn('Received message from unauthorized origin: ', event.origin);
-                    if(import.meta.env.MODE == 'production' || import.meta.env.MODE == 'staging') {
-                        return;
-                    }
+                    return;
                 }
 
                 if (event.source !== window.parent) {

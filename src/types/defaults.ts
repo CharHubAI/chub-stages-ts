@@ -6,7 +6,7 @@ import {LoadResponse} from "./load";
 import {ExtensionResponse} from "./extension";
 
 export const DEFAULT_INITIAL: InitialData<any, any> = {
-    characters: {}, config: null, lastState: null, users: {}
+    characters: {}, config: null, lastState: null, users: {}, initState: null
 }
 
 export const DEFAULT_CHARACTER: Character = {

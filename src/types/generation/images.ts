@@ -1,13 +1,13 @@
 export enum AspectRatio {
-    1_1 = '1:1',
-    16_9 = '16:9',
-    21_9 = '21:9',
-    2_3 = '2:3',
-    3_2 = '3:2',
-    4_5 = '4:5',
-    5_4 = '5:4',
-    9_16 = '9:16',
-    9_21 = '9:21'
+    SQUARE = '1:1',
+    WIDESCREEN_HORIZONTAL = '16:9',
+    CINEMATIC_HORIZONTAL = '21:9',
+    PHOTO_VERTICAL = '2:3',
+    PHOTO_HORIZONTAL = '3:2',
+    POST_VERTICAL = '4:5',
+    POST_HORIZONTAL = '5:4',
+    WIDESCREEN_VERTICAL = '9:16',
+    CINEMATIC_VERTICAL = '9:21'
 }
 
 export interface ImageResponse {
