@@ -27,9 +27,7 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
 
     const [extension, setExtension] = useState(null as null | Extension<any, any>);
     const [node, setNode] = useState(new Date());
-
-    const answers: { [key: string]: any } = {};
-    let last: string = '';
+    const [previous, setPrevious] = useState({key: '', value: {}})
 
     function sendMessage(messageType: string, message: any) {
         window.parent.postMessage({"messageType": messageType, "data": message}, '*');
@@ -44,25 +42,23 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                     console.debug('Extensions iFrame received data: ', event.data);
                 }
                 const answerKey = messageType + ': ' + JSON.stringify(data);
-                if ((answers.hasOwnProperty(answerKey) && messageType == 'INIT') || last == answerKey) {
+                if (previous.key == answerKey) {
                     console.debug('Already seen, returning previous');
-                    sendMessage(messageType, answers[answerKey]);
-                    last = answerKey;
+                    sendMessage(messageType, previous.value);
                 } else if (messageType == 'INIT') {
                     if (extension != null) {
                         console.warn("INIT message for non-null extension.");
                         sendMessage('INIT', {
                             ...DEFAULT_LOAD_RESPONSE
                         });
-                        last = answerKey;
+                        setPrevious({...previous, key: answerKey});
                     } else {
                         let newExtension = factory({...DEFAULT_INITIAL, ...data});
                         const canContinue = await newExtension.load();
                         const response = {
                             ...DEFAULT_LOAD_RESPONSE, ...canContinue
                         };
-                        answers[answerKey] = response;
-                        last = answerKey;
+                        setPrevious({key: answerKey, value: response});
                         sendMessage('INIT', response);
                         setExtension(newExtension);
                     }
@@ -74,8 +70,7 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                         ...DEFAULT_RESPONSE,
                         ...beforeResponse
                     };
-                    answers[answerKey] = response;
-                    last = answerKey;
+                    setPrevious({key: answerKey, value: response});
                     sendMessage('BEFORE', response);
                 } else if (messageType == 'AFTER') {
                     const afterResponse = await extension?.afterResponse({...data});
@@ -83,13 +78,11 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
                         ...DEFAULT_RESPONSE,
                         ...afterResponse
                     };
-                    answers[answerKey] = response;
-                    last = answerKey;
+                    setPrevious({key: answerKey, value: response});
                     sendMessage('AFTER', response);
                 } else if (messageType == 'SET') {
                     await extension?.setState(data);
-                    answers[answerKey] = {};
-                    last = answerKey;
+                    setPrevious({key: answerKey, value: {}});
                     sendMessage('SET', {});
                 }
             } catch (exception: any) {
@@ -106,11 +99,12 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
             }
 
         };
+        window.removeEventListener('message', handleMessage);
         window.addEventListener('message', handleMessage);
         return () => {
             window.removeEventListener('message', handleMessage);
         };
-    }, []);
+    }, [extension]);
 
     return <>
         <div style={{display: 'none'}}>{String(node)}{window.location.href}</div>
