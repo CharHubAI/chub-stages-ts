@@ -15,6 +15,15 @@ export interface LoadResponse {
      @default true
      @description Whether this is itself from another bot, ex. in a group chat.
      ***/
-    success: boolean
+    success: boolean,
+
+
+    /***
+     @type null | Dict[str, Any]
+     @default null
+     @description If there is any state unique to a chat, like procedurally generated
+       terrain that is only created ONCE and only once per chat, return it here to be saved.
+     ***/
+    initState: null | {[key: string]: any}
 
 }

@@ -10,6 +10,7 @@ import {InitialData} from "../types/initial";
 import {Extension} from "../types/extension";
 import {DEFAULT_INITIAL, DEFAULT_LOAD_RESPONSE, DEFAULT_RESPONSE} from "../types/defaults";
 import {Loading} from "./Loading";
+import {ALLOWED_ORIGINS} from "../services/messaging";
 
 export interface ExtensionRunnerProps<ExtensionType extends Extension<StateType, ConfigType>, StateType, ConfigType> {
     factory: (data: InitialData<StateType, ConfigType>) => ExtensionType;
@@ -36,6 +37,18 @@ export const ExtensionRunner = <ExtensionType extends Extension<StateType, Confi
     useEffect(() => {
         const handleMessage = async (event) => {
             try {
+                if (!ALLOWED_ORIGINS.has(event.origin)) {
+                    console.warn('Received message from unauthorized origin: ', event.origin);
+                    if(import.meta.env.MODE == 'production' || import.meta.env.MODE == 'staging') {
+                        return;
+                    }
+                }
+
+                if (event.source !== window.parent) {
+                    console.warn('Received message from unauthorized source: ', event.source);
+                    return;
+                }
+
                 const {messageType, data} = event.data;
                 if (MESSAGE_TYPES.has(messageType)) {
                     console.debug('Extensions iFrame received event from origin: ', event.origin);

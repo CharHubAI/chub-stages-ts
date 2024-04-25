@@ -35,4 +35,15 @@ export interface InitialData<StateType, ConfigType> {
         this will be null.
      ***/
     lastState: StateType | null
+
+    /***
+     @type null | Dict[str, Any]
+     @default null
+     @description If there is any state unique to a chat, like procedurally generated
+      terrain that is only created ONCE and only once per chat, that you returned from
+      a previous load(), it will be passed in here. If your load() returns a non-null
+      value for initState and this is null, then this is the first instantiation of your
+      extension for this chat. If not, then the chat has been started before.
+     ***/
+    initState: null | {[key: string]: any}
 }

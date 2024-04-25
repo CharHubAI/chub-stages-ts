@@ -50,7 +50,8 @@ export class ChubExtension implements Extension<StateType, ConfigType> {
             characters,     // @type:  { [key: string]: Character }
             users,              // @type:  { [key: string]: User}
             config,                             //  @type:  ConfigType
-            lastState                           //  @type:  StateType
+            lastState,                           //  @type:  StateType
+            initState
         } = data;
         this.myInternalState = lastState != null ? lastState : {'someKey': 'someValue'};
         this.myInternalState['numUsers'] = Object.keys(users).length;
@@ -71,7 +72,8 @@ export class ChubExtension implements Extension<StateType, ConfigType> {
             success: true,
             /*** @type string | null @description an error message to show
              briefly at the top of the screen, if any. ***/
-            error: null
+            error: null,
+            initState: null
         };
     }
 

@@ -34,7 +34,7 @@ export const DEFAULT_MESSAGE: Message = {
 }
 
 export const DEFAULT_LOAD_RESPONSE: LoadResponse = {
-    error: null, success: true
+    error: null, success: true, initState: null
 }
 
 export const DEFAULT_RESPONSE: ExtensionResponse<any> = {

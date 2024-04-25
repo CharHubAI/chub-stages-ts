@@ -18,3 +18,5 @@ export {DEFAULT_INITIAL, DEFAULT_CHARACTER,
 DEFAULT_USER, DEFAULT_MESSAGE, DEFAULT_RESPONSE,
  DEFAULT_LOAD_RESPONSE
 } from "./types/defaults";
+export { generationService } from "./services/generation-service";
+export {ImageRequest} from "./types/generation/images";
