@@ -20,7 +20,7 @@ function imageToImage(imageToImageRequest: ImageToImageRequest): Promise<Imagine
  Requests an animation of an existing image.
  ***/
 function animateImage(animateImageRequest: AnimateImageRequest): Promise<ImagineResponse | null> {
-    return sendMessageAndAwait<ImagineResponse>(GENERATION_REQUESTS.ANIMATE, animateImageRequest);
+    return sendMessageAndAwait<ImagineResponse>(GENERATION_REQUESTS.ANIMATE, animateImageRequest, 600);
 }
 
 /***
