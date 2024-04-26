@@ -2,16 +2,12 @@ import {ReactElement} from "react";
 import {InitialData} from "./initial";
 import {Message} from "./message";
 import {LoadResponse} from "./load";
+import {Stateful} from "./stateful";
 
 /***
  The type returned from beforePrompt and afterResponse.
  ***/
-export interface ExtensionResponse<StateType> {
-    /***
-     @type StateType | null
-     @default null
-     @description the new state after the message has been processed. ***/
-    state: StateType | null,
+export interface ExtensionResponse<ChatStateType, MessageStateType> extends Stateful<ChatStateType, MessageStateType> {
 
     /***
      @type string | null
@@ -30,8 +26,19 @@ export interface ExtensionResponse<StateType> {
     /***
      @type string | null
      @default null
+     @description A message, if any, to add to the chat log that is displayed as a system
+       message not connected to any character or person in the chat. This way, component-specific
+       messages like computed stat blocks aren't given to the LLM as something that any character said,
+       so that the LLM doesn't attempt to output them.
+     ***/
+    systemMessage: string | null,
+
+    /***
+     @type string | null
+     @default null
      @description an error message to show briefly at the top of the screen, if any. ***/
     error: string | null
+
 }
 
 /***
@@ -51,9 +58,9 @@ export interface ExtensionResponse<StateType> {
      @description This is for things you want people to be able to configure,
       like background color.
  ***/
-export abstract class Extension<StateType, ConfigType> {
+export abstract class Extension<InitStateType, ChatStateType, MessageStateType, ConfigType> {
 
-    protected constructor(data: InitialData<StateType, ConfigType>) {
+    protected constructor(data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) {
         /***
          This is the first thing called in the extension,
          to create an instance of it.
@@ -71,23 +78,23 @@ export abstract class Extension<StateType, ConfigType> {
      For example, if an extension displays expressions and no characters have an expression pack,
      there is no reason to run the extension, so it would return false here.
      ***/
-    abstract load(): Promise<Partial<LoadResponse>>;
+    abstract load(): Promise<Partial<LoadResponse<InitStateType, ChatStateType, MessageStateType>>>;
 
     /***
      This can be called at any time, typically after a jump to a different place in the chat tree
      or a swipe.
      ***/
-    abstract setState(state: StateType): Promise<void>;
+    abstract setState(state: MessageStateType): Promise<void>;
 
     /***
      This is called after someone presses 'send', but before anything is sent to the LLM.
      ***/
-    abstract beforePrompt(inputMessage: Message): Promise<Partial<ExtensionResponse<StateType>>>;
+    abstract beforePrompt(inputMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>>;
 
     /***
      This is called immediately after a response from the LLM.
      ***/
-    abstract afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<StateType>>>;
+    abstract afterResponse(botMessage: Message): Promise<Partial<ExtensionResponse<ChatStateType, MessageStateType>>>;
 
     /***
      There should be no "work" done here. Just returning the React element to display.

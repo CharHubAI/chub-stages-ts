@@ -1,7 +1,9 @@
+import {InitialState} from "./stateful";
+
 /***
  The response type for initial loading.
  ***/
-export interface LoadResponse {
+export interface LoadResponse<InitStateType, ChatStateType, MessageStateType> extends InitialState<InitStateType, ChatStateType, MessageStateType> {
 
     /***
      @type string | null
@@ -16,14 +18,5 @@ export interface LoadResponse {
      @description Whether this is itself from another bot, ex. in a group chat.
      ***/
     success: boolean,
-
-
-    /***
-     @type null | Dict[str, Any]
-     @default null
-     @description If there is any state unique to a chat, like procedurally generated
-       terrain that is only created ONCE and only once per chat, return it here to be saved.
-     ***/
-    initState: null | {[key: string]: any}
 
 }

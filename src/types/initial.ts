@@ -1,11 +1,12 @@
 import {Character} from "./character";
 import {User} from "./user";
+import {InitialState} from "./stateful";
 
 
 /***
- The data structure sent to the Extension on instantiation.
+ The data structure sent to the Component on instantiation.
  ***/
-export interface InitialData<StateType, ConfigType> {
+export interface InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType> extends InitialState<InitStateType, ChatStateType, MessageStateType> {
 
     /***
      @type { [key: string]: Character }, AKA a mapping of anonymized IDs to Characters.
@@ -24,26 +25,8 @@ export interface InitialData<StateType, ConfigType> {
     /***
      @type ConfigType | null
      @default null
-     @description The extension-specific configuration, if any.
+     @description The component-specific configuration, if any.
      ***/
     config: ConfigType | null,
 
-    /***
-     @type StateType | null
-     @default null
-     @description The extension-specific last state, if any. For a new chat, or when added to an existing chat,
-        this will be null.
-     ***/
-    lastState: StateType | null
-
-    /***
-     @type null | Dict[str, Any]
-     @default null
-     @description If there is any state unique to a chat, like procedurally generated
-      terrain that is only created ONCE and only once per chat, that you returned from
-      a previous load(), it will be passed in here. If your load() returns a non-null
-      value for initState and this is null, then this is the first instantiation of your
-      extension for this chat. If not, then the chat has been started before.
-     ***/
-    initState: null | {[key: string]: any}
 }

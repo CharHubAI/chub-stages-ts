@@ -1,48 +1,33 @@
-import {ImageRequest, ImageResponse, ImageToImageRequest} from "../types/generation/images";
+import {ImageRequest, ImagineResponse, ImageToImageRequest, AnimateImageRequest} from "../types/generation/images";
 import {GENERATION_REQUESTS} from "../types/generation/constants";
-import {ALLOWED_ORIGINS} from "./messaging";
-import { v4 } from 'uuid';
+import {sendMessageAndAwait} from "./messaging";
 
-function sendMessageAndAwait<ResponseType>(messageTypeSending: string, message: any): Promise<ResponseType | null> {
-    return new Promise((resolve, reject) => {
-        const uuid: string = v4();
-        message['uuid'] = uuid;
-        let responded = false;
-        const handleResponse = (event: any) => {
-            if (event.source === window.parent && ALLOWED_ORIGINS.has(event.origin)) {
-                const { messageType, data } = event.data;
-                if(messageType == uuid) {
-                    window.removeEventListener("message", handleResponse);
-                    if(data.hasOwnProperty('error') && data.error != null) {
-                        console.error(`Error for ${messageTypeSending}, error: ${data.error}`);
-                        resolve(null);
-                    }
-                    resolve(data);
-                }
-            }
-        };
-        window.addEventListener("message", handleResponse);
-        window.parent.postMessage({"messageType": messageTypeSending, "data": message}, '*');
-
-        setTimeout(() => {
-            window.removeEventListener("message", handleResponse);
-            if(!responded) {
-                console.error(`Response timeout for ${messageTypeSending}`);
-                resolve(null);
-            }
-        }, 60000); // 60 seconds timeout
-    });
+/***
+ Requests a newly generated image from the API.
+ ***/
+function makeImage(textToImageRequest: ImageRequest): Promise<ImagineResponse | null> {
+    return sendMessageAndAwait<ImagineResponse>(GENERATION_REQUESTS.TEXT2IMAGE, textToImageRequest);
 }
 
-function makeImage(textToImageRequest: ImageRequest): Promise<ImageResponse | null> {
-    return sendMessageAndAwait<ImageResponse>(GENERATION_REQUESTS.TEXT2IMAGE, textToImageRequest);
+/***
+ Requests an image generated based off of an original source image from the API.
+ ***/
+function imageToImage(imageToImageRequest: ImageToImageRequest): Promise<ImagineResponse | null> {
+    return sendMessageAndAwait<ImagineResponse>(GENERATION_REQUESTS.IMAGE2IMAGE, imageToImageRequest);
 }
 
-function imageToImage(imageToImageRequest: ImageToImageRequest): Promise<ImageResponse | null> {
-    return sendMessageAndAwait<ImageResponse>(GENERATION_REQUESTS.IMAGE2IMAGE, imageToImageRequest);
+/***
+ Requests an animation of an existing image.
+ ***/
+function animateImage(animateImageRequest: AnimateImageRequest): Promise<ImagineResponse | null> {
+    return sendMessageAndAwait<ImagineResponse>(GENERATION_REQUESTS.ANIMATE, animateImageRequest);
 }
 
+/***
+ Note: As of 04/26/2024, these are largely unimplemented.
+ ***/
 export const generationService = {
     makeImage,
-    imageToImage
+    imageToImage,
+    animateImage
 };

@@ -5,8 +5,9 @@ import {Message} from "./message";
 import {LoadResponse} from "./load";
 import {ExtensionResponse} from "./extension";
 
-export const DEFAULT_INITIAL: InitialData<any, any> = {
-    characters: {}, config: null, lastState: null, users: {}, initState: null
+export const DEFAULT_INITIAL: InitialData<any, any, any, any> = {
+    initState: null,
+    characters: {}, config: null, messageState: null, users: {}, chatState: null
 }
 
 export const DEFAULT_CHARACTER: Character = {
@@ -33,10 +34,12 @@ export const DEFAULT_MESSAGE: Message = {
     anonymizedId: "0", content: "", isBot: false, promptForId: "1"
 }
 
-export const DEFAULT_LOAD_RESPONSE: LoadResponse = {
-    error: null, success: true, initState: null
+export const DEFAULT_LOAD_RESPONSE: LoadResponse<any, any, any> = {
+    error: null, success: true, chatState: null, initState: null, messageState: null
 }
 
-export const DEFAULT_RESPONSE: ExtensionResponse<any> = {
-    error: null, extensionMessage: null, modifiedMessage: null, state: null
+export const DEFAULT_RESPONSE: ExtensionResponse<any, any> = {
+    chatState: null, systemMessage: null,
+    error: null, extensionMessage: null, modifiedMessage: null,
+    messageState: null
 }
