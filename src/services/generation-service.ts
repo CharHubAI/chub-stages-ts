@@ -9,7 +9,6 @@ import {CHUBBY_KITTY, GENERATION_REQUESTS} from "../types/generation/constants";
 import {sendMessageAndAwait} from "./messaging";
 import {GenerationService} from "../types/generation/service";
 import {FFmpeg} from "@ffmpeg/ffmpeg";
-import {btoa} from "node:buffer";
 import {
     DEFAULT_ANIMATION_REQUEST, DEFAULT_BACKGROUND_REMOVAL_REQUEST,
     DEFAULT_IMAGE_TO_IMAGE_REQUEST, DEFAULT_INPAINT_REQUEST
@@ -123,6 +122,17 @@ export class MockGenerator implements GenerationService {
         });
     }
 
+    async convertFileToBase64(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        let binary = '';
+        const bytes = new Uint8Array(arrayBuffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+    }
+
     async animateImage(animateImageRequest: Partial<AnimateImageRequest>): Promise<ImagineResponse | null> {
         try {
             animateImageRequest = {...DEFAULT_ANIMATION_REQUEST, ...animateImageRequest};
@@ -147,8 +157,8 @@ export class MockGenerator implements GenerationService {
                 outputFileName]
             );
 
-            const videoData = ffmpeg.readFile(outputFileName);
-            const base64String = btoa(String.fromCharCode.apply(null, videoData));
+            const videoData = await ffmpeg.readFile(outputFileName);
+            const base64String = await this.convertFileToBase64(videoData);
 
             await ffmpeg.unmount(inputFileName);
             await ffmpeg.unmount(outputFileName);
