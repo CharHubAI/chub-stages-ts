@@ -3,6 +3,8 @@ import {InitialData} from "./initial";
 import {Message} from "./message";
 import {LoadResponse} from "./load";
 import {Stateful} from "./stateful";
+import {MockGenerator, LiveGenerator} from "../services/generation-service";
+import {GenerationService} from "./generation/service";
 
 /***
  The type returned from beforePrompt and afterResponse.
@@ -60,6 +62,14 @@ export interface ExtensionResponse<ChatStateType, MessageStateType> extends Stat
  ***/
 export abstract class Extension<InitStateType, ChatStateType, MessageStateType, ConfigType> {
 
+    /***
+     @type GenerationService
+     @default MockGenerator
+     @description An interface to request image generations, edits, videos, et cetera. When not in
+       staging or production, this will only return mock and stub responses.
+     ***/
+    private generator: GenerationService;
+
     protected constructor(data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) {
         /***
          This is the first thing called in the extension,
@@ -68,6 +78,11 @@ export abstract class Extension<InitStateType, ChatStateType, MessageStateType, 
          Character at @link https://github.com/CharHubAI/chub-extensions-ts/blob/main/src/types/character.ts
          User at @link https://github.com/CharHubAI/chub-extensions-ts/blob/main/src/types/user.ts
          ***/
+        if(data.environment == 'staging' || data.environment == 'production') {
+            this.generator = new LiveGenerator();
+        } else {
+            this.generator = new MockGenerator();
+        }
     }
 
     /***

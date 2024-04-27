@@ -2,6 +2,34 @@ import {Character} from "./character";
 import {User} from "./user";
 import {InitialState} from "./stateful";
 
+/***
+ The environment the component is running in.
+ ***/
+export enum EnvironmentEnum {
+    /***
+     @description The environment in the TestRunner and by default.
+     ***/
+    development = 'development',
+
+    /***
+     @description The staging environment, when a project is being live edited within the UI.
+     ***/
+    staging = 'staging',
+
+    /***
+     @description Production, when a built and uploaded project is running normally.
+     ***/
+    production = 'production',
+
+    /***
+     @description Included for usage in custom testing if desired, but not given unless you explicitly set it.
+     ***/
+    testing = 'testing'
+}
+
+type Environment = {
+    [key in keyof typeof EnvironmentEnum]: string;
+}[keyof typeof EnvironmentEnum];
 
 /***
  The data structure sent to the Component on instantiation.
@@ -23,10 +51,17 @@ export interface InitialData<InitStateType, ChatStateType, MessageStateType, Con
     users: { [key: string]: User},
 
     /***
-     @type ConfigType | null
+     @type null | ConfigType
      @default null
      @description The component-specific configuration, if any.
      ***/
     config: ConfigType | null,
+
+    /***
+     @type Environment
+     @default development
+     @description What environment this is being run in.
+     ***/
+    environment: Environment
 
 }

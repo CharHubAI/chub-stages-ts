@@ -6,6 +6,7 @@ import {LoadResponse} from "./load";
 import {ExtensionResponse} from "./extension";
 
 export const DEFAULT_INITIAL: InitialData<any, any, any, any> = {
+    environment: 'development',
     initState: null,
     characters: {}, config: null, messageState: null, users: {}, chatState: null
 }

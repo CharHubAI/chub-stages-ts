@@ -18,5 +18,15 @@ export {DEFAULT_INITIAL, DEFAULT_CHARACTER,
 DEFAULT_USER, DEFAULT_MESSAGE, DEFAULT_RESPONSE,
  DEFAULT_LOAD_RESPONSE
 } from "./types/defaults";
-export { generationService } from "./services/generation-service";
-export {ImageRequest, ImagineResponse, ImageToImageRequest, AspectRatio} from "./types/generation/images";
+export { GenerationService } from "./types/generation/service";
+export {CHUBBY_KITTY} from "./types/generation/constants";
+export {DEFAULT_GENERATION_REQUEST, DEFAULT_PROMPTED_REQUEST,
+ DEFAULT_IMAGE_REQUEST, DEFAULT_BACKGROUND_REMOVAL_REQUEST,
+ DEFAULT_ANIMATION_REQUEST, DEFAULT_INPAINT_REQUEST,
+    DEFAULT_TEXT_TO_VIDEO_REQUEST, DEFAULT_DURATION,
+ DEFAULT_FOLEY_REQUEST, DEFAULT_TTS_REQUEST,
+ DEFAULT_MUSIC_REQUEST,
+ DEFAULT_IMAGE_TO_IMAGE_REQUEST} from "./types/generation/defaults";
+export {ImageRequest, InpaintRequest, ImagineResponse, ImageToImageRequest, AspectRatio} from "./types/generation/images";
+export {TextToVideoRequest} from "./types/generation/videos";
+export {FoleyRequest, TextToSpeechRequest, MusicGenerationRequest} from "./types/generation/audio";

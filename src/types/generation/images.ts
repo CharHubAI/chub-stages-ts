@@ -1,4 +1,4 @@
-import {GenerationRequest} from "./base";
+import {GenerationRequest, PromptedRequest} from "./base";
 
 /***
  All accepted Aspect Ratios.
@@ -37,27 +37,14 @@ export interface ImagineResponse {
 /***
  A text-to-image generation request.
  ***/
-export interface ImageRequest extends GenerationRequest {
-    /***
-     @type string
-     @default ''
-     @description The prompt to send to the generator.
-     ***/
-    prompt: string,
+export interface ImageRequest extends GenerationRequest, PromptedRequest {
 
     /***
-     @type string enum
+     @type string enum | null
      @default: 1:1
      @description The aspect ratio of the image to make.
      ***/
-    aspect_ratio: AspectRatio,
-
-    /***
-     @type string | null
-     @default null
-     @description The negative prompt, if any.
-     ***/
-    negative_prompt: string | null,
+    aspect_ratio: AspectRatio | null,
 
 }
 
@@ -69,6 +56,7 @@ export interface ImageToImageRequest extends ImageRequest {
     /***
      @type string
      @required true
+     @default CHUBBY_KITTY
      @description The base64 of or a URL of an image.
      ***/
     image: string,
@@ -84,6 +72,43 @@ export interface ImageToImageRequest extends ImageRequest {
 }
 
 /***
+ An inpainting request.
+ ***/
+export interface InpaintRequest extends ImageToImageRequest {
+
+    /***
+     @type string | null
+     @default null
+     @description A base64 dataurl or url of the image mask. If not provided,
+       you must provide a search_prompt. If provided with a search_prompt, it
+       overrides it.
+     ***/
+    mask: string | null
+
+    /***
+     @type string | null
+     @default "Anything with a face"
+     @description A short description of what entity in the image you wish to replace.
+       Results may vary. If a mask is provided, this field is ignored.
+     ***/
+    search_prompt: string | null
+
+}
+
+/***
+ A background removal request.
+ ***/
+export interface RemoveBackgroundRequest {
+    /***
+     @type string
+     @required true
+     @default CHUBBY_KITTY
+     @description The base64 of or a URL of an image.
+     ***/
+    image: string,
+}
+
+/***
  An image-to-video animation request.
  ***/
 export interface AnimateImageRequest extends GenerationRequest {
@@ -91,6 +116,7 @@ export interface AnimateImageRequest extends GenerationRequest {
     /***
      @type string
      @required true
+     @default CHUBBY_KITTY
      @description The base64 of or a URL of an image.
      ***/
     image: string,

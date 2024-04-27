@@ -16,6 +16,7 @@
     "node": "21.7.1"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
     "@types/node": "20.10.0",
     "@types/react": "^18.2.79",
     "@types/uuid": "^9.0.8",
