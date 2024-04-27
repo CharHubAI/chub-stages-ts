@@ -68,7 +68,7 @@ export abstract class Extension<InitStateType, ChatStateType, MessageStateType, 
      @description An interface to request image generations, edits, videos, et cetera. When not in
        staging or production, this will only return mock and stub responses.
      ***/
-    private generator: GenerationService;
+    public generator: GenerationService;
 
     protected constructor(data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) {
         /***
