@@ -1,4 +1,4 @@
-import {Duration} from "./base";
+import {Duration, GenerationRequest} from "./base";
 
 /***
  A music generation request.
@@ -73,7 +73,7 @@ export interface TextToSpeechRequest {
 /***
  A sound effect request.
  ***/
-export interface FoleyRequest extends Duration {
+export interface FoleyRequest extends Duration, GenerationRequest {
 
     /***
      @type string

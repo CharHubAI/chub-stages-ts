@@ -4,7 +4,12 @@ export const ALLOWED_ORIGINS = new Set(['https://venus.chub.ai',
     'https://chat.chub.ai',
     'https://chub.ai',
     'https://www.chub.ai',
+    'https://ext-beta.chub-ui.pages.dev',
     // For the mobile application these are necessary.
+    'capacitor://localhost', 'http://localhost',
+    'file://127.0.0.1',
+    'file://localhost', 'https://127.0.0.1', 'https://localhost',
+    'http://127.0.0.1', 'capacitor://127.0.0.1',
     'http://localhost:5173', 'file://', 'capacitor://']);
 
 
