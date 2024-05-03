@@ -55,6 +55,7 @@ export const DEFAULT_TEXT_TO_VIDEO_REQUEST: TextToVideoRequest = {
 
 export const DEFAULT_FOLEY_REQUEST: FoleyRequest = {
     ...DEFAULT_DURATION,
+    seed: null,
     prompt: 'Thunderstorm'
 }
 
