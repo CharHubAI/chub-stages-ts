@@ -8,7 +8,7 @@ Please [Read the Docs](https://docs.chub.ai/extensions) for the most up-to-date 
 
 It's a very small library, and each file is self-documented with heavy annotations.
 
-Please clone/fork the [Generative Extensions Template](https://github.com/CharHubAI/extensions-template) for a starting point.
+Please clone/fork the [Generative Extensions Template](https://github.com/CharHubAI/extension-template) for a starting point.
 
 The extension in the GIF above is [here](https://github.com/lloorree/maze-extension).
 
