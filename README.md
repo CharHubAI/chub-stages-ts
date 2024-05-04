@@ -1,9 +1,15 @@
-# Chub Components TypeScript Library
+![](demo.GIF)
 
-This is a collection of types and common classes used by components.
+# Generative Extensions TypeScript Library
+
+This is a collection of types and common classes used by generative extensions.
+
+Please [Read the Docs](https://docs.chub.ai/extensions) for the most up-to-date information.
 
 It's a very small library, and each file is self-documented with heavy annotations.
 
-Please clone/fork the [Component Template](https://github.com/CharHubAI/component-template) for a starting point.
+Please clone/fork the [Generative Extensions Template](https://github.com/CharHubAI/extensions-template) for a starting point.
 
-[Here's another example.](https://github.com/CharHubAI/expressions-component)
+The extension in the GIF above is [here](https://github.com/lloorree/maze-extension).
+
+[Here's another example.](https://github.com/CharHubAI/expressions-extension)
