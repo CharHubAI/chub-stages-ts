@@ -32,7 +32,8 @@ export const DEFAULT_USER: User = {
 }
 
 export const DEFAULT_MESSAGE: Message = {
-    anonymizedId: "0", content: "", isBot: false, promptForId: "1"
+    anonymizedId: "0", content: "", isBot: false, promptForId: "1",
+    identity: '12345'
 }
 
 export const DEFAULT_LOAD_RESPONSE: LoadResponse<any, any, any> = {

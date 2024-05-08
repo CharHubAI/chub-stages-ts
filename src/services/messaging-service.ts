@@ -1,5 +1,5 @@
 import {MessagingService} from "../types/messaging/service";
-import {EnvironmentRequest, ImpersonateRequest} from "../types/messaging/request";
+import {EnvironmentRequest, ImpersonateRequest, NudgeRequest} from "../types/messaging/request";
 import {MessagingResponse} from "../types/messaging/response";
 import {sendMessageAndAwait} from "./messaging";
 import {MESSAGING_REQUESTS} from "../types/messaging/constants";
@@ -18,6 +18,10 @@ export class LiveMessenger implements MessagingService<any> {
         return sendMessageAndAwait<MessagingResponse>(MESSAGING_REQUESTS.ENVIRONMENT, environmentUpdateRequest);
     }
 
+    nudge(nudgeRequest: Partial<NudgeRequest>): Promise<MessagingResponse> {
+        return sendMessageAndAwait<MessagingResponse>(MESSAGING_REQUESTS.NUDGE, nudgeRequest);
+    }
+
 }
 
 export class MockMessenger implements MessagingService<any> {
@@ -31,6 +35,10 @@ export class MockMessenger implements MessagingService<any> {
     }
 
     updateEnvironment(environmentUpdateRequest: Partial<EnvironmentRequest>): Promise<MessagingResponse> {
+        return Promise.resolve({success: true, error: null});
+    }
+
+    nudge(nudgeRequest: Partial<NudgeRequest>): Promise<MessagingResponse> {
         return Promise.resolve({success: true, error: null});
     }
 
