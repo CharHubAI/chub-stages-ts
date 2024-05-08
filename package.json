@@ -1,7 +1,7 @@
 {
-  "name": "chub-extensions-ts",
+  "name": "chub-stages-ts",
   "version": "0.1.0",
-  "description": "Public types for React-based Extensions",
+  "description": "Public types for React-based Stages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

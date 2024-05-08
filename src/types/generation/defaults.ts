@@ -10,6 +10,7 @@ import {CHUBBY_KITTY} from "./constants";
 import {Duration, GenerationRequest, PromptedRequest} from "./base";
 import {TextToVideoRequest} from "./videos";
 import {FoleyRequest, MusicGenerationRequest, TextToSpeechRequest} from "./audio";
+import {TextGenRequest} from "./text";
 
 export const DEFAULT_GENERATION_REQUEST: GenerationRequest = {
     seed: null
@@ -68,3 +69,8 @@ export const DEFAULT_MUSIC_REQUEST: MusicGenerationRequest = {
     lyrics: null, tags: null, title: null, instrumental: false,
     lyrics_prompt: null
 }
+
+export const DEFAULT_TEXT_PROMPT: TextGenRequest = {
+    prompt: '', stop: []
+}
+

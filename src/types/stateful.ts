@@ -29,7 +29,7 @@ export interface InitialState<InitStateType, ChatStateType, MessageStateType> ex
       terrain that is only created _ONCE_ and _ONLY ONCE_ per chat, that you returned from
       a previous load(), it will be passed in here. If your load() returns a non-null
       value for initState and this is null, then this is the first instantiation of your
-      component for this chat. If not, then the chat has been started before.
+      stage for this chat. If not, then the chat has been started before.
      ***/
     initState: null | InitStateType
 

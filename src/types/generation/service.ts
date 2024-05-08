@@ -8,6 +8,7 @@ import {
 } from "./images";
 import {TextToVideoRequest} from "./videos";
 import {FoleyRequest, MusicGenerationRequest, TextToSpeechRequest} from "./audio";
+import {TextGenRequest, TextResponse} from "./text";
 
 export interface GenerationService {
 
@@ -55,5 +56,11 @@ export interface GenerationService {
      Requests a song.
      ***/
     makeMusic(textToMusicRequest: Partial<MusicGenerationRequest>): Promise<ImagineResponse | null>
+
+    /***
+     Requests a text generation from whatever model the player is using.
+     The interface is barebones intentionally, to keep the player's model config.
+     ***/
+    textGen(textGenRequest: Partial<TextGenRequest>): Promise<TextResponse | null>;
 
 }

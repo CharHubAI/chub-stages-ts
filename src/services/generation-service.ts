@@ -15,10 +15,8 @@ import {
 } from "../types/generation/defaults";
 import {TextToVideoRequest} from "../types/generation/videos";
 import {FoleyRequest, MusicGenerationRequest, TextToSpeechRequest} from "../types/generation/audio";
+import {TextGenRequest, TextResponse} from "../types/generation/text";
 
-/***
- Note: As of 04/26/2024, these are largely unimplemented.
- ***/
 export class LiveGenerator implements GenerationService {
     /***
      Requests a newly generated image from the API.
@@ -63,6 +61,10 @@ export class LiveGenerator implements GenerationService {
 
     speak(textToSpeechRequest: Partial<TextToSpeechRequest>): Promise<ImagineResponse | null> {
         return sendMessageAndAwait<ImagineResponse>(GENERATION_REQUESTS.TEXT2SPEECH, textToSpeechRequest);
+    }
+
+    textGen(textGenRequest: Partial<TextGenRequest>): Promise<TextResponse | null> {
+        return sendMessageAndAwait<TextResponse>(GENERATION_REQUESTS.TEXT2TEXT, textGenRequest);
     }
 
 }
@@ -282,6 +284,10 @@ export class MockGenerator implements GenerationService {
 
     speak(textToSpeechRequest: Partial<TextToSpeechRequest>): Promise<ImagineResponse | null> {
         return Promise.resolve({seed: 0, url: "https://media.chub.ai/ElevenLabs_2024-04-27T03%2023%2053_D_ivc_s50_sb79_se26_b_m2.mp3"});
+    }
+
+    textGen(textGenRequest: Partial<TextGenRequest>): Promise<TextResponse | null> {
+        return Promise.resolve({result: 'A default text response.'});
     }
 
 }

@@ -1,19 +1,20 @@
 /***
- The runner code for an extension inside an iFrame.
- If you're writing an extension, reading this won't be useful.
+ The runner code for a stage inside an iFrame.
+ If you're writing a stage, reading this won't be useful.
  If you aren't, why are you here?
  @link https://lfs.charhub.io/important_message
  ***/
 import React, {useEffect, useState} from "react";
 
 import {InitialData} from "../types/initial";
-import {Extension} from "../types/extension";
+import {StageBase} from "../types/stage";
 import {DEFAULT_INITIAL, DEFAULT_LOAD_RESPONSE, DEFAULT_RESPONSE} from "../types/defaults";
 import {Loading} from "./Loading";
 import {ALLOWED_ORIGINS} from "../services/messaging";
 
-export interface ReactRunnerProps<ExtensionType extends Extension<InitStateType, ChatStateType, MessageStateType, ConfigType>, InitStateType, ChatStateType, MessageStateType, ConfigType> {
-    factory: (data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) => ExtensionType;
+export interface ReactRunnerProps<StageType extends StageBase<InitStateType, ChatStateType, MessageStateType, ConfigType>, InitStateType, ChatStateType, MessageStateType, ConfigType> {
+    factory: (data: InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType>) => StageType;
+    debug?: boolean; // Optional and defaults to false
 }
 
 const INIT = 'INIT';
@@ -23,10 +24,10 @@ const SET = 'SET';
 
 const MESSAGE_TYPES: Set<string> = new Set<string>([INIT, BEFORE, AFTER, SET]);
 
-export const ReactRunner = <ExtensionType extends Extension<InitStateType, ChatStateType, MessageStateType, ConfigType>,
-    InitStateType, ChatStateType, MessageStateType, ConfigType>({factory}: ReactRunnerProps<ExtensionType, InitStateType, ChatStateType, MessageStateType, ConfigType>) => {
+export const ReactRunner = <StageType extends StageBase<InitStateType, ChatStateType, MessageStateType, ConfigType>,
+    InitStateType, ChatStateType, MessageStateType, ConfigType>({factory, debug = false}: ReactRunnerProps<StageType, InitStateType, ChatStateType, MessageStateType, ConfigType>) => {
 
-    const [extension, setExtension] = useState(null as null | Extension<any, any, any, any>);
+    const [stage, setStage] = useState(null as null | StageBase<any, any, any, any>);
     const [node, setNode] = useState(new Date());
     const [previous, setPrevious] = useState({key: '', value: {}})
 
@@ -48,35 +49,37 @@ export const ReactRunner = <ExtensionType extends Extension<InitStateType, ChatS
                 }
 
                 const {messageType, data} = event.data;
-                if (MESSAGE_TYPES.has(messageType)) {
-                    console.debug('Extensions iFrame received event from origin: ', event.origin);
-                    console.debug('Extensions iFrame received data: ', event.data);
+                if (debug && MESSAGE_TYPES.has(messageType)) {
+                    console.debug('Stages iFrame received event from origin: ', event.origin);
+                    console.debug('Stages iFrame received data: ', event.data);
                 }
                 const answerKey = messageType + ': ' + JSON.stringify(data);
                 if (previous.key == answerKey) {
-                    console.debug('Already seen, returning previous');
+                    if(debug) {
+                        console.debug('Already seen, returning previous');
+                    }
                     sendMessage(messageType, previous.value);
                 } else if (messageType == 'INIT') {
-                    if (extension != null) {
-                        console.warn("INIT message for non-null extension.");
+                    if (stage != null) {
+                        console.warn("INIT message for non-null stage.");
                         sendMessage('INIT', {
                             ...DEFAULT_LOAD_RESPONSE
                         });
                         setPrevious({...previous, key: answerKey});
                     } else {
-                        let newExtension = factory({...DEFAULT_INITIAL, ...data});
-                        const canContinue = await newExtension.load();
+                        let newStage = factory({...DEFAULT_INITIAL, ...data});
+                        const canContinue = await newStage.load();
                         const response = {
                             ...DEFAULT_LOAD_RESPONSE, ...canContinue
                         };
                         setPrevious({key: answerKey, value: response});
                         sendMessage('INIT', response);
-                        setExtension(newExtension);
+                        setStage(newStage);
                     }
-                } else if (extension == null) {
-                    console.warn('Null extension instance for non-INIT message.');
+                } else if (stage == null) {
+                    console.warn('Null stage instance for non-INIT message.');
                 } else if (messageType == 'BEFORE') {
-                    const beforeResponse = await extension?.beforePrompt({...data});
+                    const beforeResponse = await stage?.beforePrompt({...data});
                     const response = {
                         ...DEFAULT_RESPONSE,
                         ...beforeResponse
@@ -84,7 +87,7 @@ export const ReactRunner = <ExtensionType extends Extension<InitStateType, ChatS
                     setPrevious({key: answerKey, value: response});
                     sendMessage('BEFORE', response);
                 } else if (messageType == 'AFTER') {
-                    const afterResponse = await extension?.afterResponse({...data});
+                    const afterResponse = await stage?.afterResponse({...data});
                     const response = {
                         ...DEFAULT_RESPONSE,
                         ...afterResponse
@@ -92,12 +95,12 @@ export const ReactRunner = <ExtensionType extends Extension<InitStateType, ChatS
                     setPrevious({key: answerKey, value: response});
                     sendMessage('AFTER', response);
                 } else if (messageType == 'SET') {
-                    await extension?.setState(data);
+                    await stage?.setState(data);
                     setPrevious({key: answerKey, value: {}});
                     sendMessage('SET', {});
                 }
             } catch (exception: any) {
-                console.error('Extensions iFrame had an unexpected error: ', exception);
+                console.error('Stages iFrame had an unexpected error: ', exception);
                 window.parent.postMessage({
                     "messageType": 'ERROR', "data": {
                         name: exception.name,
@@ -115,11 +118,11 @@ export const ReactRunner = <ExtensionType extends Extension<InitStateType, ChatS
         return () => {
             window.removeEventListener('message', handleMessage);
         };
-    }, [extension]);
+    }, [stage]);
 
     return <>
         <div style={{display: 'none'}}>{String(node)}{window.location.href}</div>
-        {extension == null ? <Loading/> : extension.render()}
+        {stage == null ? <Loading/> : stage.render()}
     </>;
 }
 

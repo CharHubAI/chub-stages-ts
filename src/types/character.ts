@@ -77,9 +77,9 @@ export interface Character extends Speaker {
      @default {}
      @description A selection of *some* of the values of the character's extensions dict.
         Some values, like extensions.chub.full_path, extensions.chub.id, et cetera, are redacted so as not to send
-        specific character identities to the extension code.
-     @remark IFF this character has a configuration specific to THIS extension, it will be located in
-        character.partial_extensions.chub.extension.config
+        specific character identities to the stage code.
+     @remark IFF this character has a configuration specific to THIS stage, it will be located in
+        character.partial_extensions.chub.stage.config in addition to its usual place in the config object.
      ***/
     partial_extensions: Record<string, any>;
 }

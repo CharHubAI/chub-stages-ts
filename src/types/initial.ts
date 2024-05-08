@@ -3,7 +3,7 @@ import {User} from "./user";
 import {InitialState} from "./stateful";
 
 /***
- The environment the component is running in.
+ The environment the stage is running in.
  ***/
 export enum EnvironmentEnum {
     /***
@@ -32,7 +32,7 @@ type Environment = {
 }[keyof typeof EnvironmentEnum];
 
 /***
- The data structure sent to the Component on instantiation.
+ The data structure sent to the Stage on instantiation.
  ***/
 export interface InitialData<InitStateType, ChatStateType, MessageStateType, ConfigType> extends InitialState<InitStateType, ChatStateType, MessageStateType> {
 
@@ -53,7 +53,7 @@ export interface InitialData<InitStateType, ChatStateType, MessageStateType, Con
     /***
      @type null | ConfigType
      @default null
-     @description The component-specific configuration, if any.
+     @description The stage-specific configuration, if any.
      ***/
     config: ConfigType | null,
 

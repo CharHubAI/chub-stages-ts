@@ -3,7 +3,7 @@ import {Character} from "./character";
 import {User} from "./user";
 import {Message} from "./message";
 import {LoadResponse} from "./load";
-import {ExtensionResponse} from "./extension";
+import {StageResponse} from "./stage";
 
 export const DEFAULT_INITIAL: InitialData<any, any, any, any> = {
     environment: 'development',
@@ -39,8 +39,8 @@ export const DEFAULT_LOAD_RESPONSE: LoadResponse<any, any, any> = {
     error: null, success: true, chatState: null, initState: null, messageState: null
 }
 
-export const DEFAULT_RESPONSE: ExtensionResponse<any, any> = {
+export const DEFAULT_RESPONSE: StageResponse<any, any> = {
     chatState: null, systemMessage: null,
     error: null, extensionMessage: null, modifiedMessage: null,
-    messageState: null
+    messageState: null, stageDirections: null
 }
