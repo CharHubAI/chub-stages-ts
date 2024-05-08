@@ -1,6 +1,7 @@
 {
   "name": "@chub-ai/stages-ts",
   "version": "0.1.0",
+  "private": false,
   "description": "Public types for React-based Stages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
