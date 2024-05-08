@@ -133,7 +133,7 @@ export interface AnimateImageRequest extends GenerationRequest {
      @type number
      @default 127
      @range [1, 255]
-     @description Lower values generally result in less motion in the output video, while higher values generally result in more motion. This parameter corresponds to the motion_bucket_id parameter from the paper.
+     @description Lower values generally result in less motion in the output video, while higher values generally result in more motion.
      ***/
     motion_bucket_id: number
 

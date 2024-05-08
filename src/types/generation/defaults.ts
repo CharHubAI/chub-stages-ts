@@ -71,6 +71,6 @@ export const DEFAULT_MUSIC_REQUEST: MusicGenerationRequest = {
 }
 
 export const DEFAULT_TEXT_PROMPT: TextGenRequest = {
-    prompt: '', stop: []
+    prompt: '', stop: [], max_tokens: 50, include_history: false
 }
 

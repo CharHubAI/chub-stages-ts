@@ -1,5 +1,5 @@
 import {MessagingResponse} from "./response";
-import {EnvironmentRequest, ImpersonateRequest} from "./request";
+import {EnvironmentRequest, ImpersonateRequest, NudgeRequest} from "./request";
 
 
 export interface MessagingService<ChatStateType> {
@@ -21,5 +21,11 @@ export interface MessagingService<ChatStateType> {
      Update certain things about the environment, like the chat's background image.
      ***/
     updateEnvironment(environmentUpdateRequest: Partial<EnvironmentRequest>): Promise<MessagingResponse>;
+
+    /***
+     Request a new message from a bot.
+     Note that your stage will have beforePrompt and afterResponse called for it.
+     ***/
+    nudge(nudgeRequest: Partial<NudgeRequest>): Promise<MessagingResponse>;
 
 }

@@ -1,9 +1,21 @@
-import {EnvironmentRequest, ImpersonateRequest} from "./request";
+import {EnvironmentRequest, ImpersonateRequest, NudgeRequest, SpeechRequest} from "./request";
+
+export const DEFAULT_SPEECH_REQUEST: SpeechRequest = {
+    speaker_id: '1', parent_id: null, is_main: true
+}
 
 export const DEFAULT_IMPERSONATION: ImpersonateRequest = {
-    message: '', speaker_id: '1'
+    ...DEFAULT_SPEECH_REQUEST,
+    message: ''
+}
+
+export const DEFAULT_NUDGE_REQUEST: NudgeRequest = {
+    ...DEFAULT_SPEECH_REQUEST,
+    stage_directions: null,
+    participants: null
 }
 
 export const DEFAULT_ENV_UPDATE: EnvironmentRequest = {
-    background: null
+    background: null,
+    input_enabled: true
 }

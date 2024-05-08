@@ -29,4 +29,11 @@ export interface Message {
        Essentially only relevant to beforePrompt currently.
      ***/
     promptForId: string | null
+
+    /***
+     @type string
+     @description The unique ID of this chat message.
+     ***/
+    identity: string
+
 }

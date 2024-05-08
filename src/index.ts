@@ -33,8 +33,9 @@ export {FoleyRequest, TextToSpeechRequest, MusicGenerationRequest} from "./types
 export {StagePosition} from "./types/meta";
 export {StageResponse, StageBase} from "./types/stage";
 export {TextGenRequest, TextResponse} from "./types/generation/text";
-export {DEFAULT_IMPERSONATION,
+export {DEFAULT_IMPERSONATION, DEFAULT_SPEECH_REQUEST,
+ DEFAULT_NUDGE_REQUEST,
  DEFAULT_ENV_UPDATE} from "./types/messaging/defaults";
-export {ImpersonateRequest, EnvironmentRequest} from "./types/messaging/request";
+export {ImpersonateRequest, EnvironmentRequest, NudgeRequest, SpeechRequest} from "./types/messaging/request";
 export {availableActions, currentState} from "./utilities/system-messages";
 export {MESSAGING_REQUESTS} from "./types/messaging/constants";

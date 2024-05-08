@@ -23,4 +23,17 @@ export interface TextGenRequest {
      ***/
     stop: string[]
 
+    /***
+     @default 50
+     @description Stops the LLM from rambling. Useful to keep this low
+       for queries like 'which action should we take?'
+     ***/
+    max_tokens: number
+
+    /***
+     @default false
+     @description Whether the chat history should be included in the request.
+     ***/
+    include_history: boolean
+
 }
