@@ -37,6 +37,6 @@ jobs:
         # Updates package.json version without creating a git tag
 
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
