@@ -37,5 +37,7 @@ export {DEFAULT_IMPERSONATION, DEFAULT_SPEECH_REQUEST,
  DEFAULT_NUDGE_REQUEST,
  DEFAULT_ENV_UPDATE} from "./types/messaging/defaults";
 export {ImpersonateRequest, EnvironmentRequest, NudgeRequest, SpeechRequest} from "./types/messaging/request";
+export {MessagingResponse} from "./types/messaging/response";
+export {MessagingService} from "./types/messaging/service";
 export {availableActions, currentState} from "./utilities/system-messages";
 export {MESSAGING_REQUESTS} from "./types/messaging/constants";

@@ -50,7 +50,7 @@ interface DeprecatedField {
     /***
      @deprecated This is now the same field as 'stageDirections'. Please use that.
      ***/
-    extensionMessage: string | null
+    extensionMessage?: string | null
 
 }
 
