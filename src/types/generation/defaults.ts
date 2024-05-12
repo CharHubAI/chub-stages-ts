@@ -23,6 +23,7 @@ export const DEFAULT_PROMPTED_REQUEST: PromptedRequest = {
 
 export const DEFAULT_IMAGE_REQUEST: ImageRequest = {
     aspect_ratio: AspectRatio.SQUARE,
+    remove_background: false,
     ...DEFAULT_PROMPTED_REQUEST,
     ...DEFAULT_GENERATION_REQUEST
 };

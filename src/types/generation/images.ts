@@ -44,7 +44,14 @@ export interface ImageRequest extends GenerationRequest, PromptedRequest {
      @default: 1:1
      @description The aspect ratio of the image to make.
      ***/
-    aspect_ratio: AspectRatio | null,
+    aspect_ratio: AspectRatio | null
+
+    /***
+     @type boolean | null
+     @default false
+     @description Whether to strip the background before returning.
+     ***/
+    remove_background: boolean | null
 
 }
 
