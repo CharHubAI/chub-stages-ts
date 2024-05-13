@@ -27,7 +27,7 @@ export enum EnvironmentEnum {
     testing = 'testing'
 }
 
-type Environment = {
+export type Environment = {
     [key in keyof typeof EnvironmentEnum]: string;
 }[keyof typeof EnvironmentEnum];
 

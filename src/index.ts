@@ -5,7 +5,7 @@ export {Character} from "./types/character";
 export {
  ExtensionResponse, Extension
 } from './types/extension';
-export {InitialData} from './types/initial';
+export {InitialData, EnvironmentEnum, Environment} from './types/initial';
 export {Message} from './types/message';
 export {Speaker} from './types/speaker';
 export {
@@ -13,6 +13,7 @@ export {
 } from './types/user';
 export {ReactRunnerProps,
  ReactRunner} from "./components/ReactRunner";
+export {Loading} from "./components/Loading";
 export {ExtensionRunnerProps, ExtensionRunner} from "./components/ExtensionRunner";
 export {DEFAULT_INITIAL, DEFAULT_CHARACTER,
 DEFAULT_USER, DEFAULT_MESSAGE, DEFAULT_RESPONSE,
@@ -41,3 +42,6 @@ export {MessagingResponse} from "./types/messaging/response";
 export {MessagingService} from "./types/messaging/service";
 export {availableActions, currentState} from "./utilities/system-messages";
 export {MESSAGING_REQUESTS} from "./types/messaging/constants";
+export {LoadResponse} from "./types/load";
+export {Stateful, InitialState} from "./types/stateful";
+
