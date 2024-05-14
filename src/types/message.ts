@@ -36,4 +36,13 @@ export interface Message {
      ***/
     identity: string
 
+    /***
+     @type boolean
+     @default true
+     @description Whether this is in the currently main/active chat.
+        Unless you have specifically made a nudge request with main false,
+        this will always be true.
+     ***/
+    isMain: boolean;
+
 }

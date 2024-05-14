@@ -17,3 +17,13 @@ export interface MessagingResponse {
     error: string | null
 
 }
+
+export interface MessageResponse extends MessagingResponse {
+
+    /***
+     @type string
+     @description The unique ID of this chat message.
+     ***/
+    identity: string
+
+}
