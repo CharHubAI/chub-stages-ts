@@ -15,7 +15,7 @@ export const ALLOWED_ORIGINS = new Set(['https://venus.chub.ai',
 
 export function sendMessageAndAwait<ResponseType>(messageTypeSending: string,
                                                   message: any,
-                                                  timeout: number = 60): Promise<ResponseType | null> {
+                                                  timeout: number = 600): Promise<ResponseType | null> {
     return new Promise((resolve, _reject) => {
         const uuid: string = v4();
         message['uuid'] = uuid;
@@ -23,9 +23,10 @@ export function sendMessageAndAwait<ResponseType>(messageTypeSending: string,
         const handleResponse = (event: any) => {
             if (event.source === window.parent && ALLOWED_ORIGINS.has(event.origin)) {
                 const { messageType, data } = event.data;
-                if(messageType == uuid) {
+                if (messageType == uuid) {
                     window.removeEventListener("message", handleResponse);
-                    if(data.hasOwnProperty('error') && data.error != null) {
+                    responded = true;
+                    if (data.hasOwnProperty('error') && data.error != null) {
                         console.error(`Error for ${messageTypeSending}, error: ${data.error}`);
                         resolve(null);
                     }
@@ -38,10 +39,10 @@ export function sendMessageAndAwait<ResponseType>(messageTypeSending: string,
 
         setTimeout(() => {
             window.removeEventListener("message", handleResponse);
-            if(!responded) {
+            if (!responded) {
                 console.error(`Response timeout for ${messageTypeSending}`);
                 resolve(null);
             }
-        }, timeout * 1000); // 60 seconds timeout
+        }, timeout * 1000);
     });
 }

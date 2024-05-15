@@ -8,6 +8,14 @@ export interface GenerationRequest {
      ***/
     seed: number | null
 
+    /***
+     @type string | null
+     @default null
+     @description If you would like to save this across runs/conversations with an individual,
+        give it some semi-unique (needs to be unique for a given stage + user combo) name.
+     ***/
+    item_id: string
+
 }
 
 export interface PromptedRequest {

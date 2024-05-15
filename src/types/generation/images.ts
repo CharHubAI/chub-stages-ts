@@ -95,6 +95,7 @@ export interface InpaintRequest extends ImageToImageRequest {
     /***
      @type string | null
      @default "Anything with a face"
+     @status Not Implemented
      @description A short description of what entity in the image you wish to replace.
        Results may vary. If a mask is provided, this field is ignored.
      ***/

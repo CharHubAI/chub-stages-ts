@@ -13,7 +13,7 @@ import {FoleyRequest, MusicGenerationRequest, TextToSpeechRequest} from "./audio
 import {TextGenRequest} from "./text";
 
 export const DEFAULT_GENERATION_REQUEST: GenerationRequest = {
-    seed: null
+    seed: null, item_id: null
 }
 
 export const DEFAULT_PROMPTED_REQUEST: PromptedRequest = {
@@ -57,7 +57,7 @@ export const DEFAULT_TEXT_TO_VIDEO_REQUEST: TextToVideoRequest = {
 
 export const DEFAULT_FOLEY_REQUEST: FoleyRequest = {
     ...DEFAULT_DURATION,
-    seed: null,
+    ...DEFAULT_GENERATION_REQUEST,
     prompt: 'Thunderstorm'
 }
 
