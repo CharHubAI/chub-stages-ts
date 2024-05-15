@@ -44,4 +44,3 @@ export {availableActions, currentState} from "./utilities/system-messages";
 export {MESSAGING_REQUESTS} from "./types/messaging/constants";
 export {LoadResponse} from "./types/load";
 export {Stateful, InitialState} from "./types/stateful";
-export {StageComponent} from "./components/StageComponent";
