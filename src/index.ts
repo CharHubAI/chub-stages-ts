@@ -35,7 +35,7 @@ export {StagePosition} from "./types/meta";
 export {StageResponse, StageBase} from "./types/stage";
 export {TextGenRequest, TextResponse} from "./types/generation/text";
 export {DEFAULT_IMPERSONATION, DEFAULT_SPEECH_REQUEST,
- DEFAULT_NUDGE_REQUEST,
+ DEFAULT_NUDGE_REQUEST, ROOT_MESSAGE_PARENT_ID,
  DEFAULT_ENV_UPDATE} from "./types/messaging/defaults";
 export {ImpersonateRequest, EnvironmentRequest, NudgeRequest, SpeechRequest} from "./types/messaging/request";
 export {MessagingResponse, MessageResponse} from "./types/messaging/response";

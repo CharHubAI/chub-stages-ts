@@ -19,3 +19,5 @@ export const DEFAULT_ENV_UPDATE: EnvironmentRequest = {
     background: null,
     input_enabled: true
 }
+
+export const ROOT_MESSAGE_PARENT_ID: string = "-2";
