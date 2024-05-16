@@ -23,10 +23,10 @@ export function sendMessageAndAwait<ResponseType>(messageTypeSending: string,
         const handleResponse = (event: any) => {
             if (event.source === window.parent && ALLOWED_ORIGINS.has(event.origin)) {
                 const { messageType, data } = event.data;
-                if (messageType == uuid) {
+                if (messageType != null && messageType == uuid) {
                     window.removeEventListener("message", handleResponse);
                     responded = true;
-                    if (data.hasOwnProperty('error') && data.error != null) {
+                    if (data != null && data.hasOwnProperty('error') && data.error != null) {
                         console.error(`Error for ${messageTypeSending}, error: ${data.error}`);
                         resolve(null);
                     }
