@@ -14,7 +14,7 @@ export interface GenerationRequest {
      @description If you would like to save this across runs/conversations with an individual,
         give it some semi-unique (needs to be unique for a given stage + user combo) name.
      ***/
-    item_id: string
+    item_id: string | null
 
 }
 
