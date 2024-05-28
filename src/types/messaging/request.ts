@@ -83,4 +83,10 @@ export interface EnvironmentRequest {
      ***/
     input_enabled: boolean | null
 
+    /***
+     @default false
+     @description Temporarily hides a typically-visible stage until it's un-hidden.
+     ***/
+    stage_hidden: boolean | null
+
 }

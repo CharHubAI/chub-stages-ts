@@ -36,4 +36,22 @@ export interface TextGenRequest {
      ***/
     include_history: boolean
 
+    /***
+     @link https://docs.chub.ai/docs/stages/developing-a-stage/generators-and-messaging/prompt-templating
+     @description Override how the full prompt will be formatted, IFF history is included. See the link for all options.
+     ***/
+    template: string
+
+    /***
+     @default null
+     @description Override the max context length to a lower value, if desired.
+     ***/
+    context_length: number | null
+
+    /***
+     @default null
+     @description Override the minimum tokens returned to a lower value, if desired.
+     ***/
+    min_tokens: number | null
+
 }

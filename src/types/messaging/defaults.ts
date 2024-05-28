@@ -17,7 +17,8 @@ export const DEFAULT_NUDGE_REQUEST: NudgeRequest = {
 
 export const DEFAULT_ENV_UPDATE: EnvironmentRequest = {
     background: null,
-    input_enabled: true
+    input_enabled: true,
+    stage_hidden: false
 }
 
 export const ROOT_MESSAGE_PARENT_ID: string = "-2";

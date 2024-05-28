@@ -21,6 +21,7 @@ const INIT = 'INIT';
 const BEFORE = 'BEFORE';
 const AFTER = 'AFTER';
 const SET = 'SET';
+const CALL = 'CALL';
 
 const MESSAGE_TYPES: Set<string> = new Set<string>([INIT, BEFORE, AFTER, SET]);
 
@@ -98,6 +99,21 @@ export const ReactRunner = <StageType extends StageBase<InitStateType, ChatState
                     await stage?.setState(data);
                     setPrevious({key: answerKey, value: {}});
                     sendMessage('SET', {});
+                } else if (messageType == CALL) {
+                    const {functionName, parameters} = data;
+                    if (stage.hasOwnProperty(functionName)) {
+                        const result = (stage[functionName] as (parameters: any) => any)(parameters);
+                        sendMessage(CALL, {
+                            functionName,
+                            result
+                        });
+                    } else {
+                        console.error(`Function '${functionName}' does not exist on the stage.`);
+                        sendMessage(CALL, {
+                            functionName,
+                            result: null
+                        });
+                    }
                 }
             } catch (exception: any) {
                 console.error('Stages iFrame had an unexpected error: ', exception);
